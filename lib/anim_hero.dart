@@ -37,11 +37,11 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     timeDilation = 3.0; //动画效果变慢
-    // ticker使用
-    // Ticker ticker = Ticker((Duration duration) {
-    //   print("Ticker $duration");
-    // });
-    // ticker.start();
+    //ticker使用
+    Ticker ticker = Ticker((Duration duration) {
+      print("Ticker $duration");
+    });
+    ticker.start();
 
     super.initState();
   }
