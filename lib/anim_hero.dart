@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_learn/details_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,20 +34,20 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   int _counter = 0;
 
-  late AnimationController _controller;
-
   @override
   void initState() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 4),
-    )..repeat(reverse: true);
+    timeDilation = 3.0; //动画效果变慢
+    //ticker使用
+    Ticker ticker = Ticker((Duration duration) {
+      print("Ticker $duration");
+    });
+    ticker.start();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -61,31 +63,25 @@ class _MyHomePageState extends State<MyHomePage>
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SlidingBox(
-                  controller: _controller,
-                  color: Colors.blue,
-                  interval: const Interval(0.0, 0.2)),
-              SlidingBox(
-                  controller: _controller,
-                  color: Colors.blue,
-                  interval: const Interval(0.2, 0.4)),
-              SlidingBox(
-                  controller: _controller,
-                  color: Colors.blue,
-                  interval: const Interval(0.4, 0.6)),
-              SlidingBox(
-                  controller: _controller,
-                  color: Colors.blue,
-                  interval: const Interval(0.6, 0.8)),
-              SlidingBox(
-                  controller: _controller,
-                  color: Colors.blue,
-                  interval: const Interval(0.8, 1.0)),
-            ]),
+      body: GridView.count(
+        crossAxisCount: 5,
+        children: List.generate(100, (index) {
+          return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailScreen(
+                            path:
+                                "https://picsum.photos/200/300?random=$index")));
+              },
+              child: Hero(
+                  tag: "https://picsum.photos/200/300?random=$index",
+                  //根据关键字[tag]去匹配
+                  child: Image(
+                      image: NetworkImage(
+                          "https://picsum.photos/200/300?random=$index"))));
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
