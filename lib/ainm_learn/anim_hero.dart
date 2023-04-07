@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_learn/details_screen.dart';
+import 'package:flutter_learn/ainm_learn/details_screen.dart';
 
 void main() {
   runApp(const MyApp());
