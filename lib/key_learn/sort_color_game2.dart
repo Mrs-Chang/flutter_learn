@@ -126,7 +126,6 @@ class Box extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-
       top: y,
       left: x,
       duration: const Duration(milliseconds: 500),
